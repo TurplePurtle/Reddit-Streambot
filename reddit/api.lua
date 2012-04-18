@@ -2,7 +2,7 @@
 Reddit api. Currently supported functions are (all prepended by "reddit."):
 
 login(user, passwd)
-me(auth)
+getJson(url, auth)
 submit(title, isSelf, content, subreddit, auth)
 comment(thing_id, text, auth)
 ]]
