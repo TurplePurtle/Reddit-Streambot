@@ -67,8 +67,14 @@ local function main()
 	local savefile = "reddit_streambot.dat"
 	local newestLink = fread(savefile, "*number")
 	if not newestLink then
-		print "Last link id not found. Continue? (y/n)"
-		if io.read() ~= "y" then return end
+		local lastLogged = reddit.getJson("http://api.reddit.com/r/mylittlestreamlog/new?sort=new&limit=1")
+		
+		if lastLogged and lastLogged.data then
+			newestLink = lastLogged.data.children[1].data.created_utc
+		else
+			print "Last link id not found. Continue? (y/n)"
+			if io.read() ~= "y" then return end
+		end
 	end
 
 	local authdata = assert(getAuthData(), "Error: Unable to log in.")
